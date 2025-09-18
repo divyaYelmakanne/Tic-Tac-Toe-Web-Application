@@ -1,0 +1,288 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tic-Tac-Toe Gaming Design System */
+
+@layer base {
+  :root {
+    /* Gaming Background System */
+    --background: 230 20% 5%;
+    --foreground: 220 20% 90%;
+
+    /* Gaming Card System */
+    --card: 230 15% 8%;
+    --card-foreground: 220 15% 88%;
+
+    /* Popover System */
+    --popover: 230 18% 6%;
+    --popover-foreground: 220 18% 92%;
+
+    /* Gaming Primary - Electric Blue */
+    --primary: 220 100% 60%;
+    --primary-foreground: 220 10% 10%;
+    --primary-glow: 220 100% 70%;
+
+    /* Gaming Secondary - Neon Purple */
+    --secondary: 280 100% 70%;
+    --secondary-foreground: 280 10% 10%;
+    --secondary-glow: 280 100% 80%;
+
+    /* Gaming Accent - Cyan */
+    --accent: 180 100% 60%;
+    --accent-foreground: 180 10% 10%;
+    --accent-glow: 180 100% 70%;
+
+    /* Muted Gaming Colors */
+    --muted: 230 10% 15%;
+    --muted-foreground: 220 10% 60%;
+
+    /* Gaming Success - Neon Green */
+    --success: 120 100% 50%;
+    --success-foreground: 120 10% 10%;
+    --success-glow: 120 100% 60%;
+
+    /* Gaming Danger - Neon Red */
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 0 10% 10%;
+    --destructive-glow: 0 100% 70%;
+
+    /* Gaming UI Elements */
+    --border: 230 15% 20%;
+    --input: 230 15% 12%;
+    --ring: 220 100% 60%;
+
+    /* Gaming Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-background: linear-gradient(135deg, hsl(var(--background)), hsl(230 25% 8%));
+    
+    /* Gaming Shadows & Glows */
+    --shadow-primary: 0 0 30px hsl(var(--primary) / 0.3);
+    --shadow-secondary: 0 0 30px hsl(var(--secondary) / 0.3);
+    --shadow-accent: 0 0 30px hsl(var(--accent) / 0.3);
+    --shadow-success: 0 0 30px hsl(var(--success) / 0.3);
+    --shadow-card: 0 10px 30px hsl(230 20% 2% / 0.5);
+    
+    /* Gaming Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-background);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Game Board Animations */
+  .game-cell {
+    @apply relative overflow-hidden bg-card border border-border rounded-lg cursor-pointer;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:border-primary hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)];
+  }
+  
+  .game-cell:hover {
+    transform: scale(1.05);
+  }
+  
+  .game-cell.winner {
+    @apply border-success;
+    box-shadow: var(--shadow-success);
+    animation: pulse-glow 1s ease-in-out infinite;
+  }
+  
+  /* Player Symbols */
+  .symbol-x {
+    @apply text-primary;
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+  
+  .symbol-o {
+    @apply text-secondary;
+    text-shadow: 0 0 10px hsl(var(--secondary) / 0.5);
+  }
+  
+  /* Gaming Button Variants */
+  .btn-gaming {
+    @apply px-6 py-3 rounded-lg font-semibold text-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply border border-transparent;
+  }
+  
+  .btn-primary {
+    @apply btn-gaming bg-primary text-primary-foreground;
+    @apply hover:shadow-[0_0_20px_hsl(var(--primary)/0.4)];
+    @apply active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply btn-gaming bg-secondary text-secondary-foreground;
+    @apply hover:shadow-[0_0_20px_hsl(var(--secondary)/0.4)];
+    @apply active:scale-95;
+  }
+  
+  .btn-accent {
+    @apply btn-gaming bg-accent text-accent-foreground;
+    @apply hover:shadow-[0_0_20px_hsl(var(--accent)/0.4)];
+    @apply active:scale-95;
+  }
+  
+  /* Gaming Cards */
+  .gaming-card {
+    @apply bg-card border border-border rounded-xl p-6;
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+  
+  .gaming-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px hsl(230 20% 2% / 0.7);
+  }
+  
+  /* Score Display */
+  .score-display {
+    @apply text-center p-4 rounded-lg border border-border;
+    @apply bg-gradient-to-br from-card to-muted;
+  }
+  
+  /* Difficulty Indicators */
+  .difficulty-easy {
+    @apply text-success;
+    text-shadow: 0 0 8px hsl(var(--success) / 0.3);
+  }
+  
+  .difficulty-medium {
+    @apply text-accent;
+    text-shadow: 0 0 8px hsl(var(--accent) / 0.3);
+  }
+  
+  .difficulty-hard {
+    @apply text-destructive;
+    text-shadow: 0 0 8px hsl(var(--destructive) / 0.3);
+  }
+}
+
+@layer utilities {
+  /* Gaming Animations */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--success) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--success) / 0.6);
+    }
+  }
+  
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0) rotate(180deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2) rotate(90deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-down {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes glow-pulse {
+    0%, 100% {
+      filter: brightness(1) drop-shadow(0 0 5px currentColor);
+    }
+    50% {
+      filter: brightness(1.2) drop-shadow(0 0 15px currentColor);
+    }
+  }
+  
+  .animate-bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .animate-slide-down {
+    animation: slide-down 0.3s ease-out;
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+}
